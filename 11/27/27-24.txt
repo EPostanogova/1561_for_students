@@ -1,0 +1,41 @@
+def clasterType(x,y):
+   if x<-2:
+       return 1
+   else: return 0
+
+
+count=2
+clasters=[[] for i in range(count)]
+
+
+for s in open('27-24a.txt'):
+   x,y=s.replace(',','.').split()
+   x,y=float(x),float(y)
+   k=clasterType(x,y)
+   clasters[k].append((x,y))
+
+
+def dist(p1,p2):
+   return abs(p1[0]-p2[0])+abs(p1[1]-p2[1])
+
+
+center=[]
+distMin=float('inf')
+
+
+for k in range(count):
+   for p0 in clasters[k]:
+       sumDist=sum([dist(p0,p) for p in clasters[k]])
+       if sumDist<distMin:
+           distMin=sumDist
+           centroid=p0
+   center.append(centroid)
+
+
+sumx,sumy=0,0
+for k in range(count):
+   sumx+=center[k][0]
+   sumy+=center[k][1]
+px=sumx/count
+py=sumy/count
+print(int(px*10000),int(py*10000))
